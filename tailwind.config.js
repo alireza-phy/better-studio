@@ -14,13 +14,10 @@ module.exports = {
     fontFamily: {
       inter: ["Inter"],
     },
-    // fontWeight: {
-    //   bold: 700,
-    //   semibold: 600,
-    //   DEFAULT: 500,
-    // },
     colors: {
       fontPrimary: "#3A3A3A",
+      white: "white",
+      blue: "blue",
       todo: {
         bg: "#FEF4F3",
         title: "#6E1E29",
@@ -47,6 +44,7 @@ module.exports = {
         taskSquareBorder: "#D0E7CB",
         taskSquareTick: "#9BCD90",
         taskDelete: "#F4C5CB", // temp
+        taskNew: "#9BCD90",
       },
     },
     extend: {
@@ -65,6 +63,11 @@ module.exports = {
           lineHeight: "41.15px",
           fontWeight: 700,
           marginBottom: "15px",
+        },
+        h3: {
+          fontSize: "15px",
+          lineHeight: "18.15px",
+          fontWeight: 600,
         },
         h5: {
           color: "#3A3A3A",

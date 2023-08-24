@@ -70,7 +70,7 @@ module.exports = {
      */
     rules: [
       {
-        test: /\.(js|jsx)$/, //kind of file extension this rule should look for and apply in test
+        test: /\.js|\.jsx$/, //kind of file extension this rule should look for and apply in test
         exclude: /node_modules/, //folder to be excluded
         use: "babel-loader", //loader which we are going to use
       },
@@ -78,6 +78,14 @@ module.exports = {
         test: /\.css$/i,
         include: path.resolve(__dirname, "src"),
         use: ["style-loader", "css-loader", "postcss-loader"],
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
       },
     ],
   },
