@@ -66,6 +66,26 @@ const App = () => {
   const [data, setData] = useState(initialData);
   let debounceTimer;
 
+  const handleAddNewTask = (status) => {
+    setData((data) =>
+      data?.map((taskGroup) =>
+        taskGroup?.status === status
+          ? {
+              status: status,
+              tasks: [
+                ...taskGroup?.tasks,
+                {
+                  id: (Math.floor(Math.random() * 991) + 10).toString(),
+                  content: "",
+                  checked: false,
+                },
+              ],
+            }
+          : taskGroup
+      )
+    );
+  };
+
   const handleDeleteTask = (id, status) => {
     setData((data) =>
       data?.map((taskGroup) =>
@@ -366,7 +386,7 @@ const App = () => {
                 <Droppable droppableId={taskGroup.status}>
                   {(provided) => (
                     <div
-                      className="py-[23px]"
+                      className="py-5"
                       ref={provided.innerRef}
                       {...provided.droppableProps}
                     >
@@ -448,12 +468,13 @@ const App = () => {
                               </div>
                               <textarea
                                 className="appearance-none border-none w-full py-2 px-3 text-fontPrimary leading-tight focus:outline-none focus:shadow-none"
+                                placeholder="write something..."
                                 id="username"
                                 type="text"
                                 style={{ height: "auto", resize: "none" }}
-                                rows={Math.min(
-                                  Math.ceil(task.content.length / 28),
-                                  20
+                                rows={Math.max(
+                                  Math.ceil(task.content.length / 20),
+                                  1
                                 )}
                                 value={task.content}
                                 onChange={(e) =>
@@ -489,6 +510,22 @@ const App = () => {
                     </div>
                   )}
                 </Droppable>
+                {(taskGroup.status === "Todo" ||
+                  taskGroup.status === "Doing") && (
+                  <div
+                    onClick={() => handleAddNewTask(taskGroup.status)}
+                    className={clsx(
+                      "flex gap-[10px] items-center px-[10px] cursor-pointer",
+                      {
+                        ["text-todo-taskNew"]: taskGroup.status === "Todo",
+                        ["text-doing-taskNew"]: taskGroup.status === "Doing",
+                      }
+                    )}
+                  >
+                    <p className="text-md font-semibold">+</p>
+                    <p className="text-md font-semibold">New</p>
+                  </div>
+                )}
               </div>
             );
           })}
