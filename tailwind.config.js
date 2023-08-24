@@ -62,7 +62,6 @@ module.exports = {
           fontSize: "34px",
           lineHeight: "41.15px",
           fontWeight: 700,
-          marginBottom: "15px",
         },
         h3: {
           fontSize: "15px",
