@@ -1,5 +1,5 @@
 import React from "react";
-import TasksCategories from "./components/tasksStatusCard/tasksCategories";
+import TasksCategories from "./components/tasksCategories";
 import checkIcon from "../public/icons/check.png";
 const App = () => {
   return (

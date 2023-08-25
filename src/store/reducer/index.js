@@ -4,18 +4,18 @@ export const initialState = {
       status: "Todo",
       tasks: [
         {
-          id: "task-1",
+          id: "1",
           content:
             "Start with meditation, exercise & breakfast for a productive day",
           checked: false,
         },
         {
-          id: "task-2",
+          id: "2",
           content: "Read to learn something new every day",
           checked: false,
         },
         {
-          id: "task-3",
+          id: "3",
           content: "Learn something fresh & relevant",
           checked: false,
         },
@@ -25,12 +25,12 @@ export const initialState = {
       status: "Doing",
       tasks: [
         {
-          id: "task-4",
+          id: "4",
           content: "Engage & question in meetings",
           checked: false,
         },
         {
-          id: "task-5",
+          id: "5",
           content: "Use time-blocking for effective days",
           checked: false,
         },
@@ -40,12 +40,12 @@ export const initialState = {
       status: "Done",
       tasks: [
         {
-          id: "task-6",
+          id: "6",
           content: "Finished online course - check!",
           checked: true,
         },
         {
-          id: "task-7",
+          id: "7",
           content:
             "Congratulate yourself for incorporating healthier habits into your lifestyle, like regular exercise or mindful eating",
           checked: true,
@@ -78,7 +78,7 @@ export const reducer = (state = initialState, action) => {
               tasks: [
                 ...taskGroup?.tasks,
                 {
-                  id: (Math.floor(Math.random() * 10000) + 10).toString(),
+                  id: data?.id,
                   content: "",
                   checked: false,
                 },

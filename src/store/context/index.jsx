@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ReactNode, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 import * as store from "../reducer";
 
 // Create a context
