@@ -2,7 +2,9 @@ import React from "react";
 import clsx from "clsx";
 
 function Checkbox({ checked, handleCheckBoxClick, ...props }) {
+  // Define the Checkbox component
   const { status } = props;
+
   return (
     <div className="inline-flex items-center">
       <label className="relative flex cursor-pointer items-center rounded-full p-0">

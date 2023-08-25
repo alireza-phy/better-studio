@@ -4,6 +4,7 @@ import blueDeleteIcon from "../../../public/icons/icons8-multiply-26-blue.png";
 import orangeDeleteIcon from "../../../public/icons/icons8-multiply-26-orange.png";
 
 function DeleteIcon({ handleDelete, ...props }) {
+    // Define the Delete icon component
   const { status } = props;
   return (
     <img

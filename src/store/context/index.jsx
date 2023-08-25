@@ -7,16 +7,12 @@ export const TodoListContext = createContext({
   dispatch: () => undefined,
 });
 
+// Create a ContextProvider component
 const ContextProvider = ({ children }) => {
+  // Use the useReducer hook to manage state with reducer
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
 
-  const value = {
-    todoList: state.todoList,
-    addTodoItem: (todoItemLabel) => {
-      dispatch({ type: "delete-task", todoItemLabel });
-    },
-  };
-
+  // Wrap the children with the TodoListContext.Provider
   return (
     <TodoListContext.Provider value={{ state, dispatch }}>
       {children}

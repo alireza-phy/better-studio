@@ -1,6 +1,7 @@
 import React from "react";
 
 function TaskContent({ content, inputRef, handleChangeText, ...props }) {
+    // Define the task textarea component
   const { id, status } = props;
 
   return (

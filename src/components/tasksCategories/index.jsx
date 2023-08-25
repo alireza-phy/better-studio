@@ -8,12 +8,14 @@ import TasksColumn from "../tasksColumn";
 import AddNewButton from "./addNewButton";
 
 function TasksCategories() {
-  const [data, setData] = useState([]);
-  const inputRef = useRef();
-  const { state, dispatch } = useContext(TodoListContext);
-  const savedStateJSON = localStorage.getItem("tasks");
+  // Define TasksCategories component
+  const [data, setData] = useState([]); // Initialize state for data
+  const inputRef = useRef(); // Initialize a ref for input
+  const { state, dispatch } = useContext(TodoListContext); // Use the TodoListContext with useContext hook
+  const savedStateJSON = localStorage.getItem("tasks"); // Get saved tasks data from localStorage
 
   useEffect(() => {
+    // Use effect to update data state
     if (!savedStateJSON) {
       const stateJSON = JSON.stringify(state?.tasks);
       localStorage.setItem("tasks", stateJSON);
@@ -24,6 +26,7 @@ function TasksCategories() {
   }, [savedStateJSON]);
 
   const onDragEnd = (result) => {
+    // Define the onDragEnd function to handle drag and drop
     const { destination, source } = result;
     if (!destination) {
       return;
@@ -58,9 +61,10 @@ function TasksCategories() {
     }
   };
 
+  // Render the TasksCategories component
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-rows-3 md:grid-rows-none md:grid-cols-3 gap-5">
         {data?.map((taskGroup) => {
           return (
             <div

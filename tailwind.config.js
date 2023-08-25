@@ -1,8 +1,13 @@
 /** @type {import('tailwindcss').Config} */
-import plugin from "tailwindcss/plugin";
+// Specify the type of the configuration as 'Config' from 'tailwindcss' module
+// This comment helps TypeScript understand the structure of the configuration
 
-export const content = ["./src/**/*.{js,jsx,html}"];
+import plugin from "tailwindcss/plugin"; // Import the 'plugin' function from 'tailwindcss/plugin'
+
+// Define configuration settings
+export const content = ["./src/**/*.{js,jsx,html}"]; // Specify content paths for PurgeCSS
 export const theme = {
+  // Define theme customization
   fontSize: {
     xl: "16px",
     lg: "15px",
@@ -15,6 +20,7 @@ export const theme = {
   colors: {
     fontPrimary: "#3A3A3A",
     white: "white",
+    // Color palette for different task statuses
     todo: {
       bg: "#FEF4F3",
       title: "#6E1E29",
@@ -48,6 +54,7 @@ export const theme = {
   },
 };
 export const plugins = [
+  // Use the 'plugin' function to add custom base styles
   plugin(function ({ addBase }) {
     addBase({
       h1: {

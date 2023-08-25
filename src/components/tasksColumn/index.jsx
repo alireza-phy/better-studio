@@ -7,52 +7,55 @@ import TaskContent from "./taskContent";
 import DeleteIcon from "./deleteIcon";
 
 function TasksColumn({ taskGroup, inputRef }) {
-  const { dispatch } = useContext(TodoListContext);
+  // Define the TasksColumn component
+  const { dispatch } = useContext(TodoListContext); // Get the dispatch function from TodoListContext
 
   const handleDeleteTask = (props) => {
+    // Function to handle task deletion
     const { id, status } = props;
-    dispatch({ type: "delete-task", data: { status, id } });
+    dispatch({ type: "delete-task", data: { status, id } }); // Dispatch delete-task action
   };
 
   const handleCheckBoxClick = (props) => {
+    // Function to handle checkbox click
     const { status, id } = props;
-    dispatch({ type: "change-task-check", data: { status, id } });
+    dispatch({ type: "change-task-check", data: { status, id } }); // Dispatch change-task-check action
+
     let debounceTimer;
     {
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
-        dispatch({ type: "change-task-status", data: { status, id } });
+        dispatch({ type: "change-task-status", data: { status, id } }); // Dispatch change-task-status action after a delay
       }, 3000);
     }
   };
 
   const handleChangeText = (e, id, status) => {
+    // Function to handle text change
     const newValue = e?.target?.value?.split("\n");
     console.log(newValue);
     dispatch({
       type: "edit-task",
       data: { status, id, value: newValue[0] },
-    });
+    }); // Dispatch edit-task action for the initial value
+
     if (newValue.length > 1) {
       newValue.shift();
       newValue.map((value) => {
         const id = (Math.floor(Math.random() * 10000) + 10).toString();
-        dispatch({ type: "create-task", data: { id, status } });
+        dispatch({ type: "create-task", data: { id, status } }); // Dispatch create-task action for each additional value
         dispatch({
           type: "edit-task",
           data: { status, id, value: value },
-        });
+        }); // Dispatch edit-task action for each additional value
       });
     }
   };
+
   return (
     <Droppable droppableId={taskGroup?.status}>
       {(dropProvided) => (
-        <div
-          ref={dropProvided.innerRef}
-          // {...dropProvided.droppableProps}
-          className="py-5"
-        >
+        <div ref={dropProvided.innerRef} className="py-5">
           {taskGroup?.tasks.map((task, index) => (
             <Draggable key={task.id} draggableId={task.id} index={index}>
               {(dragProvided) => (

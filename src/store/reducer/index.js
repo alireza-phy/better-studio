@@ -1,3 +1,4 @@
+// introduce initial state
 export const initialState = {
   tasks: localStorage.getItem("tasks")
     ? JSON.parse(localStorage.getItem("tasks"))
@@ -57,10 +58,15 @@ export const initialState = {
       ],
 };
 
+// Define reducer function
 export const reducer = (state = initialState, action) => {
+  // Destructure action object
   const { type, data } = action;
+
+  // Perform different actions based on the provided 'type'
   switch (type) {
     case "delete-task":
+      // Logic for deleting a task
       const newTasksDeletedOne = state?.tasks?.map((taskGroup) =>
         taskGroup?.status === data?.status
           ? {
@@ -74,6 +80,7 @@ export const reducer = (state = initialState, action) => {
         tasks: [...newTasksDeletedOne],
       };
     case "create-task":
+      // Logic for creating a new task
       const newTasksAddedNew = state?.tasks?.map((taskGroup) =>
         taskGroup?.status === data?.status
           ? {
@@ -94,6 +101,7 @@ export const reducer = (state = initialState, action) => {
         tasks: [...newTasksAddedNew],
       };
     case "edit-task":
+      // Logic for editing a task
       const newTasksEditedOne = state?.tasks?.map((taskGroup) =>
         taskGroup?.status === data?.status
           ? {
@@ -115,6 +123,7 @@ export const reducer = (state = initialState, action) => {
         tasks: [...newTasksEditedOne],
       };
     case "change-task-check":
+      // Logic for changing checkbox condition of a task
       const newTaskCheckedChanged = state?.tasks?.map((taskGroup) =>
         taskGroup?.status === data?.status
           ? {
@@ -136,6 +145,7 @@ export const reducer = (state = initialState, action) => {
         tasks: [...newTaskCheckedChanged],
       };
     case "change-task-status":
+      // Logic for changing status of a task (todo | doing | done)
       const newTaskStatusChanged = [...state?.tasks];
 
       const originIndex = newTaskStatusChanged.findIndex(
@@ -165,6 +175,7 @@ export const reducer = (state = initialState, action) => {
         tasks: [...newTaskStatusChanged],
       };
     case "reorder-task-in-column":
+      // Logic for changing position of a task in a column
       const columnIdx = state?.tasks.findIndex(
         (column) => column.status === data.droppableId
       );
@@ -189,6 +200,7 @@ export const reducer = (state = initialState, action) => {
         tasks: [...reorderedTasks],
       };
     case "move-task-between-column":
+      // Logic for changing position of a task in between two column
       const sourceColumnIdx = state?.tasks.findIndex(
         (column) => column.status === data.srcDroppableId
       );
