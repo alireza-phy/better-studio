@@ -1,58 +1,60 @@
 export const initialState = {
-  tasks: [
-    {
-      status: "Todo",
-      tasks: [
+  tasks: localStorage.getItem("tasks")
+    ? JSON.parse(localStorage.getItem("tasks"))
+    : [
         {
-          id: "1",
-          content:
-            "Start with meditation, exercise & breakfast for a productive day",
-          checked: false,
+          status: "Todo",
+          tasks: [
+            {
+              id: "1",
+              content:
+                "Start with meditation, exercise & breakfast for a productive day",
+              checked: false,
+            },
+            {
+              id: "2",
+              content: "Read to learn something new every day",
+              checked: false,
+            },
+            {
+              id: "3",
+              content: "Learn something fresh & relevant",
+              checked: false,
+            },
+          ],
         },
         {
-          id: "2",
-          content: "Read to learn something new every day",
-          checked: false,
+          status: "Doing",
+          tasks: [
+            {
+              id: "4",
+              content: "Engage & question in meetings",
+              checked: false,
+            },
+            {
+              id: "5",
+              content: "Use time-blocking for effective days",
+              checked: false,
+            },
+          ],
         },
         {
-          id: "3",
-          content: "Learn something fresh & relevant",
-          checked: false,
+          status: "Done",
+          tasks: [
+            {
+              id: "6",
+              content: "Finished online course - check!",
+              checked: true,
+            },
+            {
+              id: "7",
+              content:
+                "Congratulate yourself for incorporating healthier habits into your lifestyle, like regular exercise or mindful eating",
+              checked: true,
+            },
+          ],
         },
       ],
-    },
-    {
-      status: "Doing",
-      tasks: [
-        {
-          id: "4",
-          content: "Engage & question in meetings",
-          checked: false,
-        },
-        {
-          id: "5",
-          content: "Use time-blocking for effective days",
-          checked: false,
-        },
-      ],
-    },
-    {
-      status: "Done",
-      tasks: [
-        {
-          id: "6",
-          content: "Finished online course - check!",
-          checked: true,
-        },
-        {
-          id: "7",
-          content:
-            "Congratulate yourself for incorporating healthier habits into your lifestyle, like regular exercise or mindful eating",
-          checked: true,
-        },
-      ],
-    },
-  ],
 };
 
 export const reducer = (state = initialState, action) => {
@@ -67,6 +69,7 @@ export const reducer = (state = initialState, action) => {
             }
           : taskGroup
       );
+      localStorage.setItem("tasks", JSON.stringify(newTasksDeletedOne));
       return {
         tasks: [...newTasksDeletedOne],
       };
@@ -86,6 +89,7 @@ export const reducer = (state = initialState, action) => {
             }
           : taskGroup
       );
+      localStorage.setItem("tasks", JSON.stringify(newTasksAddedNew));
       return {
         tasks: [...newTasksAddedNew],
       };
@@ -106,6 +110,7 @@ export const reducer = (state = initialState, action) => {
             }
           : taskGroup
       );
+      localStorage.setItem("tasks", JSON.stringify(newTasksEditedOne));
       return {
         tasks: [...newTasksEditedOne],
       };
@@ -126,6 +131,7 @@ export const reducer = (state = initialState, action) => {
             }
           : taskGroup
       );
+      localStorage.setItem("tasks", JSON.stringify(newTaskCheckedChanged));
       return {
         tasks: [...newTaskCheckedChanged],
       };
@@ -154,6 +160,7 @@ export const reducer = (state = initialState, action) => {
           });
         }
       }
+      localStorage.setItem("tasks", JSON.stringify(newTaskStatusChanged));
       return {
         tasks: [...newTaskStatusChanged],
       };
@@ -166,7 +173,6 @@ export const reducer = (state = initialState, action) => {
       const [reorderedTask] = updatedTasks.splice(data.srcIndex, 1);
       updatedTasks.splice(data.destIndex, 0, reorderedTask);
 
-
       const updatedColumn = {
         ...column,
         tasks: updatedTasks,
@@ -178,6 +184,7 @@ export const reducer = (state = initialState, action) => {
         }
         return col;
       });
+      localStorage.setItem("tasks", JSON.stringify(reorderedTasks));
       return {
         tasks: [...reorderedTasks],
       };
@@ -222,6 +229,7 @@ export const reducer = (state = initialState, action) => {
         }
         return column;
       });
+      localStorage.setItem("tasks", JSON.stringify(updatedReorderedTasks));
       return {
         tasks: [...updatedReorderedTasks],
       };

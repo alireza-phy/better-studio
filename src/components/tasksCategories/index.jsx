@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import clsx from "clsx";
 import handIcon from "../../../public/icons/icons8-flexed-biceps-48.png";
@@ -8,8 +8,20 @@ import TasksColumn from "../tasksColumn";
 import AddNewButton from "./addNewButton";
 
 function TasksCategories() {
-  const { state, dispatch } = useContext(TodoListContext);
+  const [data, setData] = useState([]);
   const inputRef = useRef();
+  const { state, dispatch } = useContext(TodoListContext);
+  const savedStateJSON = localStorage.getItem("tasks");
+
+  useEffect(() => {
+    if (!savedStateJSON) {
+      const stateJSON = JSON.stringify(state?.tasks);
+      localStorage.setItem("tasks", stateJSON);
+      setData(state?.tasks);
+    } else {
+      setData(JSON.parse(savedStateJSON));
+    }
+  }, [savedStateJSON]);
 
   const onDragEnd = (result) => {
     const { destination, source } = result;
@@ -49,7 +61,7 @@ function TasksCategories() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="grid grid-cols-3 gap-5">
-        {state?.tasks.map((taskGroup) => {
+        {data?.map((taskGroup) => {
           return (
             <div
               key={taskGroup.status}
