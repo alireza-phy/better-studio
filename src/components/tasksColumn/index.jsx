@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { memo, useContext } from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import clsx from "clsx";
 import { TodoListContext } from "../../store/context";
@@ -52,6 +52,42 @@ function TasksColumn({ taskGroup, inputRef }) {
     }
   };
 
+  const MemoizedCheckBox = memo(
+    (data) => {
+      const { task, taskGroup } = data;
+      return (
+        <Checkbox
+          id={task.id}
+          checked={task.checked}
+          status={taskGroup.status}
+          handleCheckBoxClick={handleCheckBoxClick}
+        />
+      );
+    },
+    (prev, next) => {
+      return (
+        prev.task.checked === next.task.checked &&
+        prev.taskGroup.status === next.taskGroup.status
+      );
+    }
+  );
+
+  const MemoizedDeleteIcon = memo(
+    (data) => {
+      const { task, taskGroup } = data;
+      return (
+        <DeleteIcon
+          id={task.id}
+          status={taskGroup.status}
+          handleDelete={handleDeleteTask}
+        />
+      );
+    },
+    () => {
+      return true;
+    }
+  );
+
   return (
     <Droppable droppableId={taskGroup?.status}>
       {(dropProvided) => (
@@ -75,12 +111,7 @@ function TasksColumn({ taskGroup, inputRef }) {
                   {...dragProvided.draggableProps}
                   {...dragProvided.dragHandleProps}
                 >
-                  <Checkbox
-                    id={task.id}
-                    checked={task.checked}
-                    status={taskGroup.status}
-                    handleCheckBoxClick={handleCheckBoxClick}
-                  />
+                  <MemoizedCheckBox task={task} taskGroup={taskGroup} />
                   <TaskContent
                     id={task.id}
                     inputRef={inputRef}
@@ -88,11 +119,7 @@ function TasksColumn({ taskGroup, inputRef }) {
                     status={taskGroup.status}
                     handleChangeText={handleChangeText}
                   />
-                  <DeleteIcon
-                    id={task.id}
-                    status={taskGroup.status}
-                    handleDelete={handleDeleteTask}
-                  />
+                  <MemoizedDeleteIcon task={task} taskGroup={taskGroup} />
                 </div>
               )}
             </Draggable>

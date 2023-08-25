@@ -12,7 +12,7 @@ function TaskContent({ content, inputRef, handleChangeText, ...props }) {
       type="text"
       autoFocus={id === inputRef.current}
       style={{ height: "auto", resize: "none" }}
-      rows={Math.max(Math.ceil(content.length / 20), 1)}
+      rows={Math.max(Math.ceil(content?.length / 20), 1)}
       value={content}
       onChange={(e) => handleChangeText(e, id, status)}
     />
