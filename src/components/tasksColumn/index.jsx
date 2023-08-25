@@ -27,23 +27,35 @@ function TasksColumn({ taskGroup, inputRef }) {
   };
 
   const handleChangeText = (e, id, status) => {
+    const newValue = e?.target?.value?.split("\n");
+    console.log(newValue);
     dispatch({
       type: "edit-task",
-      data: { status, id, value: e?.target?.value },
+      data: { status, id, value: newValue[0] },
     });
+    if (newValue.length > 1) {
+      newValue.shift();
+      newValue.map((value) => {
+        const id = (Math.floor(Math.random() * 10000) + 10).toString();
+        dispatch({ type: "create-task", data: { id, status } });
+        dispatch({
+          type: "edit-task",
+          data: { status, id, value: value },
+        });
+      });
+    }
   };
-  console.log(taskGroup);
   return (
-    <Droppable droppableId={taskGroup.status}>
-      {(provided) => (
+    <Droppable droppableId={taskGroup?.status}>
+      {(dropProvided) => (
         <div
+          ref={dropProvided.innerRef}
+          // {...dropProvided.droppableProps}
           className="py-5"
-          ref={provided.innerRef}
-          {...provided.droppableProps}
         >
           {taskGroup?.tasks.map((task, index) => (
             <Draggable key={task.id} draggableId={task.id} index={index}>
-              {(provided) => (
+              {(dragProvided) => (
                 <div
                   className={clsx(
                     "bg-white p-2 mb-2 shadow rounded border cursor-pointer rounded-xs flex gap-[10px] items-center",
@@ -56,9 +68,9 @@ function TasksColumn({ taskGroup, inputRef }) {
                         taskGroup.status === "Done",
                     }
                   )}
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
+                  ref={dragProvided.innerRef}
+                  {...dragProvided.draggableProps}
+                  {...dragProvided.dragHandleProps}
                 >
                   <Checkbox
                     id={task.id}
@@ -82,7 +94,7 @@ function TasksColumn({ taskGroup, inputRef }) {
               )}
             </Draggable>
           ))}
-          {provided.placeholder}
+          {dropProvided.placeholder}
         </div>
       )}
     </Droppable>
