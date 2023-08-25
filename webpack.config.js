@@ -9,7 +9,7 @@ module.exports = {
    * the environment - development, production, none. tells webpack
    * to use its built-in optimizations accordingly. default is production
    */
-  mode: "production",
+  mode: "development",
   /** "entry"
    * the entry point
    */
